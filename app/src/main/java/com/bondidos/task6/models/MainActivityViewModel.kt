@@ -3,6 +3,7 @@ package com.bondidos.task6.models
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import utils.Event
 
@@ -15,6 +16,14 @@ class MainActivityViewModel() : ViewModel() {
     // Used to notify the MainActivity that the main content fragment needs to be swapped.
     val navigateToFragment: LiveData<Event<FragmentNavigationRequest>> get() = _navigateToFragment
     private val _navigateToFragment = MutableLiveData<Event<FragmentNavigationRequest>>()
+
+    /**
+     * [navigateToMediaItem] acts as an "event", rather than state. [Observer]s
+     * are notified of the change as usual with [LiveData], but only one [Observer]
+     * will actually read the data. For more information, check the [Event] class.
+     */
+    val navigateToMediaItem: LiveData<Event<String>> get() = _navigateToMediaItem
+    private val _navigateToMediaItem = MutableLiveData<Event<String>>()
 
     /**
      * Convenience method used to swap the fragment shown in the main activity

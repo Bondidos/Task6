@@ -9,10 +9,14 @@ import android.view.ViewGroup
 import com.bondidos.task6.R
 import com.bondidos.task6.models.NowPlayingViewModel
 
+const val NOW_PLAYING = "nowPlaying"
+
 class NowPlayingFragment : Fragment() {
 
     companion object {
-        fun newInstance() = NowPlayingFragment()
+        fun newInstance(ItemId: String) = NowPlayingFragment().apply {
+            arguments?.putString(NOW_PLAYING,ItemId)
+        }
     }
 
     private lateinit var viewModel: NowPlayingViewModel
