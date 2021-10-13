@@ -19,12 +19,12 @@ class MainActivityViewModel() : ViewModel() {
     private val _navigateToFragment = MutableLiveData<Event<FragmentNavigationRequest>>()
 
     /**
-     * [navigateToMediaItem] acts as an "event", rather than state. [Observer]s
+     * [navigateToTrackItem] acts as an "event", rather than state. [Observer]s
      * are notified of the change as usual with [LiveData], but only one [Observer]
      * will actually read the data. For more information, check the [Event] class.
      */
-    val navigateToMediaItem: LiveData<Event<String>> get() = _navigateToMediaItem
-    private val _navigateToMediaItem = MutableLiveData<Event<String>>()
+    val navigateToTrackItem: LiveData<Event<String>> get() = _navigateToTrackItem
+    private val _navigateToTrackItem = MutableLiveData<Event<String>>()
 
     /**
      * Convenience method used to swap the fragment shown in the main activity
@@ -33,15 +33,18 @@ class MainActivityViewModel() : ViewModel() {
      * @param backStack if true, add this transaction to the back stack
      * @param tag the name to use for this fragment in the stack
      */
-    fun showFragment(fragment: Fragment, backStack: Boolean = true, tag: String? = null) {
+    /*fun showFragment(fragment: Fragment, backStack: Boolean = true, tag: String? = null) {
         _navigateToFragment.value = Event(FragmentNavigationRequest(fragment, backStack, tag))
+    }*/
+    fun showFragment(fragment: Fragment, backStack: Boolean = true){
+        _navigateToFragment.value = Event(FragmentNavigationRequest(fragment, backStack, null))
     }
     /**
      * This posts a browse [Event] that will be handled by the
      * observer in [MainActivity].
      */
     fun browseToItem(trackItem: TrackItem) {
-        _navigateToMediaItem.value = Event(trackItem.title)
+        _navigateToTrackItem.value = Event(trackItem.title)
     }
 }
 

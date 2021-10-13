@@ -1,13 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.NowPlayingFragment">
+    android:layout_margin="2dp">
 
-    <TextView
+    <ImageView
+        android:id="@+id/albumArt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:contentDescription="@string/albomArt"
+        android:scaleType="centerCrop"
+        app:srcCompat="@android:color/transparent" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="64dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_marginTop="-24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/albumArt"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <ImageButton
+        android:id="@+id/media_button"
+        android:layout_width="@dimen/exo_media_button_width"
+        android:layout_height="@dimen/exo_media_button_height"
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintLeft_toRightOf="@id/media_button"
+        app:layout_constraintRight_toLeftOf="@id/position"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:text="Song Title" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintLeft_toRightOf="@id/media_button"
+        app:layout_constraintRight_toLeftOf="@id/position"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="Artist" />
+
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:text="0:00" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/position"
+        tools:text="0:00" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

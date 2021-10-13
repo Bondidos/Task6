@@ -20,8 +20,8 @@ class TrackListFragment : Fragment() {
     private val trackListViewModel by viewModels<TrackListModel> {
         TrackListModelFactory(requireContext())
     }
-    private val listAdapter = TrackItemAdapter{clickedItem ->
-        mainActivityViewModel.browseToItem(clickedItem)
+    private val listAdapter = TrackItemAdapter{title ->
+        mainActivityViewModel.browseToItem(title)
     }
     private var _binding: TrackListFragmentBinding? = null
     private val binding: TrackListFragmentBinding get() = requireNotNull(_binding)

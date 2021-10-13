@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task6.R
 import com.bondidos.task6.databinding.TrackItemBinding
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.track_item.view.*
 
 class TrackItemAdapter(
     private val itemClickedListener: (TrackItem) -> Unit
@@ -20,7 +21,7 @@ class TrackItemAdapter(
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val item = getItem(position)
-
+        holder.trackItem = item
         holder.title.text = item.title
         holder.subtitle.text = item.artist
 
@@ -39,7 +40,7 @@ class TrackViewHolder(
     val subtitle = binding.subtitle
     val image = binding.albumArt
 
-    private val trackItem: TrackItem? = null
+    var trackItem: TrackItem? = null
 
     init{
         binding.root.setOnClickListener {
