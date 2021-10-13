@@ -1,7 +1,9 @@
 package com.bondidos.task6.recycler
 
 import androidx.recyclerview.widget.DiffUtil
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class TrackItem(
     val title: String,
     val artist: String,

@@ -10,7 +10,7 @@ import com.bondidos.task6.ui.fragments.TrackListFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel by viewModels<MainActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +20,8 @@ class MainActivity : AppCompatActivity() {
         // Observe MainActivityViewModel.navigateToFragment for Events that request a fragment swap.
         viewModel.navigateToFragment.observe(this) {
             it?.getContentIfNotHandled()?.let { fragmentRequest ->
-                val transaction = supportFragmentManager
-                    .beginTransaction()
-                    .replace(
+                val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(
                         R.id.container, fragmentRequest.fragment, fragmentRequest.tag
                     )
                 if (fragmentRequest.backStack) transaction.addToBackStack(null)
@@ -34,11 +33,11 @@ class MainActivity : AppCompatActivity() {
          * Observe [MainActivityViewModel.navigateToMediaItem] for [Event]s indicating
          * the user has requested to browse to a different [MediaItemData].
          */
-        viewModel.navigateToMediaItem.observe(this, Observer {
+        /*viewModel.navigateToMediaItem.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { mediaId ->
                 navigateNowPlayingFragment(mediaId)
             }
-        })
+        })*/
     }
         private fun navigateNowPlayingFragment(mediaId: String) {
             var fragment: NowPlayingFragment? = getBrowseFragment(mediaId)

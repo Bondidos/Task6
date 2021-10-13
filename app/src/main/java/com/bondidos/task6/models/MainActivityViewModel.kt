@@ -5,14 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import utils.Event
+import com.bondidos.task6.recycler.TrackItem
+import com.bondidos.task6.utils.Event
 
 class MainActivityViewModel() : ViewModel() {
 
-    // navigate to Item
+   /* // navigate to Item
     private val _trackItem = MutableLiveData<Event<String>>()
     val trackItem: LiveData<Event<String>> get() = _trackItem
-
+*/
     // Used to notify the MainActivity that the main content fragment needs to be swapped.
     val navigateToFragment: LiveData<Event<FragmentNavigationRequest>> get() = _navigateToFragment
     private val _navigateToFragment = MutableLiveData<Event<FragmentNavigationRequest>>()
@@ -35,7 +36,13 @@ class MainActivityViewModel() : ViewModel() {
     fun showFragment(fragment: Fragment, backStack: Boolean = true, tag: String? = null) {
         _navigateToFragment.value = Event(FragmentNavigationRequest(fragment, backStack, tag))
     }
-
+    /**
+     * This posts a browse [Event] that will be handled by the
+     * observer in [MainActivity].
+     */
+    fun browseToItem(trackItem: TrackItem) {
+        _navigateToMediaItem.value = Event(trackItem.title)
+    }
 }
 
 /**
