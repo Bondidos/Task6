@@ -28,14 +28,29 @@
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <ImageButton
-        android:id="@+id/media_button"
+        android:id="@+id/btnPlay"
         android:layout_width="@dimen/exo_media_button_width"
         android:layout_height="@dimen/exo_media_button_height"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        app:layout_constraintLeft_toLeftOf="@id/btnStop"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/btnStop"
+        android:layout_width="@dimen/exo_media_button_width"
+        android:layout_height="@dimen/exo_media_button_height"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackground"
         android:scaleType="centerInside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider"
-        app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+        app:srcCompat="@drawable/exo_icon_stop"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -47,7 +62,7 @@
         android:layout_marginEnd="@dimen/text_margin"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintLeft_toRightOf="@id/media_button"
+        app:layout_constraintLeft_toRightOf="@id/btnPlay"
         app:layout_constraintRight_toLeftOf="@id/position"
         app:layout_constraintTop_toBottomOf="@id/divider"
         tools:text="Song Title" />
@@ -60,7 +75,7 @@
         android:layout_marginEnd="@dimen/text_margin"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintLeft_toRightOf="@id/media_button"
+        app:layout_constraintLeft_toRightOf="@id/btnPlay"
         app:layout_constraintRight_toLeftOf="@id/position"
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Artist" />

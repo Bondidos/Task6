@@ -6,32 +6,62 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.bondidos.task6.R
+import com.bondidos.task6.databinding.NowPlayingFragmentBinding
+import com.bondidos.task6.databinding.TrackListFragmentBinding
+import com.bondidos.task6.models.Factories.NowPlayingViewModelFactory
 import com.bondidos.task6.models.NowPlayingViewModel
+import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.now_playing_fragment.*
 
 const val NOW_PLAYING = "nowPlaying"
 
 class NowPlayingFragment : Fragment() {
 
-    companion object {
-        fun newInstance(ItemId: String) = NowPlayingFragment().apply {
-            arguments?.putString(NOW_PLAYING,ItemId)
-        }
+    private val nowPlayingViewModel by viewModels<NowPlayingViewModel> {
+        NowPlayingViewModelFactory(requireContext())
     }
 
-    private lateinit var viewModel: NowPlayingViewModel
+    private var _binding: NowPlayingFragmentBinding? = null
+    private val binding: NowPlayingFragmentBinding get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.now_playing_fragment, container, false)
+    ): View {
+        _binding = NowPlayingFragmentBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initListeners()
+        initObservers()
+    }
 
+    private fun initListeners() {
+        with(binding){
+            btnPlay.setOnClickListener { nowPlayingViewModel.playTrack() }
+            btnStop.setOnClickListener { nowPlayingViewModel.stopPlaying() }
+
+            /*prevButton.setOnClickListener { previousTrack() }
+            playButton.setOnClickListener { playTrack() }
+            stopButton.setOnClickListener { stopPlaying() }
+            pauseButton.setOnClickListener { pausePlaying() }
+            nextButton.setOnClickListener { nextTrack() }*/
+        }
+    }
+
+    private fun initObservers() {
+        nowPlayingViewModel.playingState.observe(viewLifecycleOwner){
+            with(binding){
+                title.text = it.title
+                subtitle.text = it.artist
+                albumArt.setImageBitmap(it.cover)
+            }
+        }
     }
 
 }

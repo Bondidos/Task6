@@ -16,44 +16,44 @@ import com.bondidos.task6.recycler.TrackItemAdapter
 
 class TrackListFragment : Fragment() {
 
-    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-    private val trackListViewModel by viewModels<TrackListModel> {
-        TrackListModelFactory(requireContext())
-    }
-    private val listAdapter = TrackItemAdapter{title ->
-        mainActivityViewModel.browseToItem(title)
-    }
-    private var _binding: TrackListFragmentBinding? = null
-    private val binding: TrackListFragmentBinding get() = requireNotNull(_binding)
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = TrackListFragmentBinding.inflate(inflater, container,false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initRecycler()
-        initObservers()
-    }
-
-    private fun initRecycler() {
-        with(binding){
-            recycler.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = listAdapter
-            }
-        }
-    }
-
-    private fun initObservers(){
-        trackListViewModel.trackList.observe(viewLifecycleOwner){
-            listAdapter.submitList(it)
-        }
-    }
+//    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+//    private val trackListViewModel by viewModels<TrackListModel> {
+//        TrackListModelFactory(requireContext())
+//    }
+//    private val listAdapter = TrackItemAdapter{title ->
+//        mainActivityViewModel.browseToItem(title)
+//    }
+//    private var _binding: TrackListFragmentBinding? = null
+//    private val binding: TrackListFragmentBinding get() = requireNotNull(_binding)
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        _binding = TrackListFragmentBinding.inflate(inflater, container,false)
+//        return binding.root
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        initRecycler()
+//        initObservers()
+//    }
+//
+//    private fun initRecycler() {
+//        with(binding){
+//            recycler.apply {
+//                layoutManager = LinearLayoutManager(requireContext())
+//                adapter = listAdapter
+//            }
+//        }
+//    }
+//
+//    private fun initObservers(){
+//        trackListViewModel.trackList.observe(viewLifecycleOwner){
+//            listAdapter.submitList(it)
+//        }
+//    }
 
     companion object {
         fun newInstance() = TrackListFragment()
