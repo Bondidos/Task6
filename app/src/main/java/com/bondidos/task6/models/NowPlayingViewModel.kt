@@ -17,6 +17,7 @@ import com.bondidos.task6.MainActivity
 import com.bondidos.task6.MediaService.MediaService
 import com.bondidos.task6.R
 import kotlinx.android.synthetic.main.main_fragment.*
+import javax.inject.Inject
 
 
 private const val BUTTON_PLAY = 1
@@ -25,7 +26,7 @@ private const val BUTTON_PAUSE = 3
 private const val BUTTON_NEXT = 4
 private const val BUTTON_PREVIOUS = 5
 
-class NowPlayingViewModel(val context: Context) : ViewModel() {
+class NowPlayingViewModel @Inject constructor(val context: Context) : ViewModel() {
     private var mediaServiceBinder: MediaService.MediaServiceBinder? = null
 
     private var mediaController: MediaControllerCompat? = null
