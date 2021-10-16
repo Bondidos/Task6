@@ -14,10 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bondidos.task6.BluetoothIntentListener
 import com.bondidos.task6.MainActivity
-import com.bondidos.task6.MediaService.MediaService
-import com.bondidos.task6.R
-import kotlinx.android.synthetic.main.main_fragment.*
-import javax.inject.Inject
+import com.bondidos.task6.media_service.MediaService
 
 
 private const val BUTTON_PLAY = 1

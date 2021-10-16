@@ -1,4 +1,4 @@
-package com.bondidos.task6.MediaService
+package com.bondidos.task6.media_service
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -31,7 +31,15 @@ import androidx.media.MediaBrowserServiceCompat
 import androidx.media.session.MediaButtonReceiver
 import com.bondidos.task6.MainActivity
 import com.bondidos.task6.R
-import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.Timeline
 import com.google.android.exoplayer2.analytics.AnalyticsCollector
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.extractor.ExtractorsFactory
@@ -155,8 +163,6 @@ class MediaService : MediaBrowserServiceCompat() {
             .setUpstreamDataSourceFactory(httpDataSourceFactory2)
             .setFlags(CacheDataSource.FLAG_BLOCK_ON_CACHE or CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
 
-          /*  .setContentType(C.CONTENT_TYPE_MUSIC)
-            .setUsage(C.USAGE_MEDIA)*/
         exoPlayer = SimpleExoPlayer.Builder(
             this,
             DefaultRenderersFactory(this),

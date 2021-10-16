@@ -1,4 +1,4 @@
-package com.bondidos.task6.MediaService
+package com.bondidos.task6.media_service
 
 import android.content.Context
 import android.graphics.Bitmap
