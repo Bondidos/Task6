@@ -44,13 +44,9 @@ class NowPlayingFragment : Fragment() {
     private fun initListeners() {
         with(binding){
             btnPlay.setOnClickListener { nowPlayingViewModel.playTrack() }
-            btnStop.setOnClickListener { nowPlayingViewModel.stopPlaying() }
-
-            /*prevButton.setOnClickListener { previousTrack() }
-            playButton.setOnClickListener { playTrack() }
-            stopButton.setOnClickListener { stopPlaying() }
-            pauseButton.setOnClickListener { pausePlaying() }
-            nextButton.setOnClickListener { nextTrack() }*/
+            btnStop.setOnClickListener { nowPlayingViewModel.stopPlaying() }//todo(stand to pause instead stop)
+            btnPrev.setOnClickListener { nowPlayingViewModel.previousTrack() }
+            btnNext.setOnClickListener { nowPlayingViewModel.nextTrack() }
         }
     }
 

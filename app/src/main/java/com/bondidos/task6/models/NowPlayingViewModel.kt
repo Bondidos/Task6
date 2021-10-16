@@ -26,7 +26,8 @@ private const val BUTTON_PAUSE = 3
 private const val BUTTON_NEXT = 4
 private const val BUTTON_PREVIOUS = 5
 
-class NowPlayingViewModel @Inject constructor(val context: Context) : ViewModel() {
+class NowPlayingViewModel (val context: Context) : ViewModel() {
+
     private var mediaServiceBinder: MediaService.MediaServiceBinder? = null
 
     private var mediaController: MediaControllerCompat? = null

@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/albomArt"
         android:scaleType="centerCrop"
-        app:srcCompat="@android:color/transparent" />
+        app:srcCompat="@android:color/transparent"
+        tools:layout_editor_absoluteX="-35dp"
+        tools:layout_editor_absoluteY="-46dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/divider"
@@ -21,6 +23,7 @@
         app:layout_constraintGuide_end="64dp" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_marginTop="-24dp"
@@ -28,15 +31,51 @@
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <ImageButton
-        android:id="@+id/btnPlay"
+        android:id="@+id/btnPrev"
+        style="@style/ExoMediaButton"
         android:layout_width="@dimen/exo_media_button_width"
         android:layout_height="@dimen/exo_media_button_height"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackground"
         android:scaleType="centerInside"
-        app:layout_constraintLeft_toLeftOf="@id/btnStop"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        android:contentDescription="@string/previous_track"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlay"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.959"
+        app:srcCompat="@drawable/ic_baseline_skip_previous_24"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/btnNext"
+        style="@style/ExoMediaButton"
+        android:layout_width="@dimen/exo_media_button_width"
+        android:layout_height="@dimen/exo_media_button_height"
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/next_track"
+        app:layout_constraintBottom_toBottomOf="@+id/btnStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnStop"
+        app:layout_constraintTop_toTopOf="@+id/btnStop"
+        app:srcCompat="@drawable/ic_baseline_skip_next_24"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/btnPlay"
+        style="@style/ExoMediaButton"
+        android:layout_width="@dimen/exo_media_button_width"
+        android:layout_height="@dimen/exo_media_button_height"
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/play_track"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPrev"
+        app:layout_constraintEnd_toStartOf="@+id/btnStop"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnPrev"
+        app:layout_constraintTop_toTopOf="@+id/btnPrev"
         app:srcCompat="@drawable/ic_baseline_play_arrow_24"
         tools:ignore="ContentDescription" />
 
@@ -44,13 +83,16 @@
         android:id="@+id/btnStop"
         android:layout_width="@dimen/exo_media_button_width"
         android:layout_height="@dimen/exo_media_button_height"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackground"
         android:scaleType="centerInside"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        app:srcCompat="@drawable/exo_icon_stop"
+        android:contentDescription="@string/stop_playing_track"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPlay"
+        app:layout_constraintEnd_toStartOf="@+id/btnNext"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnPlay"
+        app:layout_constraintTop_toTopOf="@+id/btnPlay"
+        app:srcCompat="@drawable/ic_baseline_stop_24"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -62,7 +104,7 @@
         android:layout_marginEnd="@dimen/text_margin"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintLeft_toRightOf="@id/btnPlay"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/position"
         app:layout_constraintTop_toBottomOf="@id/divider"
         tools:text="Song Title" />
@@ -75,7 +117,7 @@
         android:layout_marginEnd="@dimen/text_margin"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintLeft_toRightOf="@id/btnPlay"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/position"
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Artist" />

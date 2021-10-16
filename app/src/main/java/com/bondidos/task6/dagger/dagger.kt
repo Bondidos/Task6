@@ -7,6 +7,7 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
+/*
 
 @Singleton
 @Component(modules = [MainActivity::class])
@@ -20,4 +21,4 @@ class NowPlayingViewModel(private val application: Application){
     @Provides
     @Singleton
     fun appContext (): Context = application
-}
+}*/
