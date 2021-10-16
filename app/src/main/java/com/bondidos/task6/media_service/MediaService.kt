@@ -1,66 +1,133 @@
 package com.bondidos.task6.media_service
 
-import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.media.AudioAttributes
-import android.media.AudioFocusRequest
-import android.media.AudioManager
-import android.net.Uri
-import android.os.Binder
-import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
 import android.support.v4.media.MediaBrowserCompat
-import android.support.v4.media.MediaDescriptionCompat
-import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.PRIORITY_HIGH
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.media.MediaBrowserServiceCompat
-import androidx.media.session.MediaButtonReceiver
-import com.bondidos.task6.MainActivity
-import com.bondidos.task6.R
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.Timeline
-import com.google.android.exoplayer2.analytics.AnalyticsCollector
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.extractor.ExtractorsFactory
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.upstream.HttpDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
-import com.google.android.exoplayer2.upstream.cache.SimpleCache
-import com.google.android.exoplayer2.util.Clock
-import java.io.File
-import android.media.browse.MediaBrowser.MediaItem.FLAG_PLAYABLE as FLAG_PL
+import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
+
 
 class MediaService : MediaBrowserServiceCompat() {
 
-    private val stateBuilder = PlaybackStateCompat.Builder().setActions(
+    //todo (Create and initialize the media session)
+//    A newly-created media session has no capabilities.
+//    You must initialize the session by performing these steps:
+//
+//    Set flags so that the media session can receive
+//    callbacks from media controllers and media buttons.
+//    Create and initialize an instance of PlaybackStateCompat
+//    and assign it to the session. The playback state changes
+//    throughout the session, so we recommend caching the PlaybackStateCompat.Builder for reuse.
+//    Create an instance of MediaSessionCompat.Callback and assign
+//    it to the session (more on callbacks below).
+//    You should create and initialize a media session in the onCreate()
+//    method of the activity or service that owns the session.
+//
+//    In order for media buttons to work when your app is newly initialized
+//    (or stopped), its PlaybackState must contain a play action matching the
+//    intent that the media button sends. This is why ACTION_PLAY is assigned
+//    to the session state during initialization. For more information, see Responding
+//    to Media Buttons.
+    private lateinit var mediaSession: MediaSessionCompat
+    private lateinit var mediaSessionConnector: MediaSessionConnector
+
+    /**
+     * Configure ExoPlayer to handle audio focus for us.
+     * See [Player.AudioComponent.setAudioAttributes] for details.
+     */
+    private val exoPlayer: ExoPlayer by lazy {
+        SimpleExoPlayer.Builder(this).build().apply {
+            setAudioAttributes(uAmpAudioAttributes, true)
+            setHandleAudioBecomingNoisy(true)
+            addListener(playerListener)
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        // Build a PendingIntent that can be used to launch the UI.
+        val sessionActivityPendingIntent =
+            packageManager?.getLaunchIntentForPackage(packageName)?.let { sessionIntent ->
+                PendingIntent.getActivity(this, 0, sessionIntent, 0)
+            }
+
+        // Create a new MediaSession.
+        mediaSession = MediaSessionCompat(this, "MusicService")
+            .apply {
+                setSessionActivity(sessionActivityPendingIntent)
+                isActive = true
+            }
+
+        // session token. needs to create MediaController in MusicServiceConnection
+        sessionToken = mediaSession.sessionToken
+
+        // Uses for connection between ExoPlayer and MediaSession
+        mediaSessionConnector = MediaSessionConnector(mediaSession).apply{
+                setPlayer(exoPlayer)
+            }
+    }
+
+
+    override fun onGetRoot(
+        clientPackageName: String,
+        clientUid: Int,
+        rootHints: Bundle?
+    ): BrowserRoot? {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoadChildren(
+        parentId: String,
+        result: Result<MutableList<MediaBrowserCompat.MediaItem>>
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onDestroy() {
+        mediaSession.run {
+            isActive = false
+            release()
+        }
+
+        /*// Cancel coroutines when the service is going away.
+        serviceJob.cancel()*/
+
+        // Free ExoPlayer resources.
+        exoPlayer.removeListener(playerListener)
+        exoPlayer.release()
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /****************************************************************************/
+    /*private val stateBuilder = PlaybackStateCompat.Builder().setActions(
         PlaybackStateCompat.ACTION_PLAY
                 or PlaybackStateCompat.ACTION_STOP
                 or PlaybackStateCompat.ACTION_PAUSE
@@ -631,4 +698,6 @@ class MediaService : MediaBrowserServiceCompat() {
         private const val VOLUME_NORMAL = 1.0F
         private const val CACHE_SIZE = 1024 * 1024 * 100L //100Mb
     }
+
+    */
 }

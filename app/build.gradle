@@ -65,6 +65,7 @@ dependencies {
     // ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.15.1'
     implementation 'com.google.android.exoplayer:extension-okhttp:2.15.1'
+    implementation 'com.google.android.exoplayer:extension-mediasession:2.15.1'
 
     // ok-http-3
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
