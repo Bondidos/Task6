@@ -1,13 +1,18 @@
 package com.bondidos.task6.media_service
 
 import android.app.PendingIntent
+import android.media.AudioAttributes.CONTENT_TYPE_MUSIC
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.C.CONTENT_TYPE_MUSIC
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 
 
@@ -19,9 +24,11 @@ class MediaService : MediaBrowserServiceCompat() {
 //
 //    Set flags so that the media session can receive
 //    callbacks from media controllers and media buttons.
+//
 //    Create and initialize an instance of PlaybackStateCompat
 //    and assign it to the session. The playback state changes
 //    throughout the session, so we recommend caching the PlaybackStateCompat.Builder for reuse.
+//
 //    Create an instance of MediaSessionCompat.Callback and assign
 //    it to the session (more on callbacks below).
 //    You should create and initialize a media session in the onCreate()
@@ -34,18 +41,31 @@ class MediaService : MediaBrowserServiceCompat() {
 //    to Media Buttons.
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector
-
+    //uses in mediasession callback NO NEED ?
+    private val stateBuilder = PlaybackStateCompat.Builder().setActions(
+        PlaybackStateCompat.ACTION_PLAY
+                or PlaybackStateCompat.ACTION_STOP
+                or PlaybackStateCompat.ACTION_PAUSE
+                or PlaybackStateCompat.ACTION_PLAY_PAUSE
+                or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+                or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+                or PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH
+    )
     /**
      * Configure ExoPlayer to handle audio focus for us.
      * See [Player.AudioComponent.setAudioAttributes] for details.
      */
     private val exoPlayer: ExoPlayer by lazy {
         SimpleExoPlayer.Builder(this).build().apply {
-            setAudioAttributes(uAmpAudioAttributes, true)
+            setAudioAttributes(this@MediaService.audioAttributes, true)
             setHandleAudioBecomingNoisy(true)
-            addListener(playerListener)
+           // addListener(playerListener)         //todo callback for managing notification manager & manage errors
         }
     }
+    private val audioAttributes = AudioAttributes.Builder()
+        .setContentType(C.CONTENT_TYPE_MUSIC)
+        .setUsage(C.USAGE_MEDIA)
+        .build()
 
     override fun onCreate() {
         super.onCreate()
@@ -65,7 +85,7 @@ class MediaService : MediaBrowserServiceCompat() {
 
         // session token. needs to create MediaController in MusicServiceConnection
         sessionToken = mediaSession.sessionToken
-
+        //TODO TODAY PLAYLIST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Uses for connection between ExoPlayer and MediaSession
         mediaSessionConnector = MediaSessionConnector(mediaSession).apply{
                 setPlayer(exoPlayer)
@@ -98,7 +118,7 @@ class MediaService : MediaBrowserServiceCompat() {
         serviceJob.cancel()*/
 
         // Free ExoPlayer resources.
-        exoPlayer.removeListener(playerListener)
+        //exoPlayer.removeListener(playerListener)
         exoPlayer.release()
     }
 
