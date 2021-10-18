@@ -182,12 +182,12 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
     }
 }
 
-// TODO IN SERVICE SIDE DO WORK WITH INSERTING METADATA FROM JSON
 @Suppress("PropertyName")
 val EMPTY_PLAYBACK_STATE: PlaybackStateCompat = PlaybackStateCompat.Builder()
     .setState(PlaybackStateCompat.STATE_NONE, 0, 0f)
     .build()
 
+// TODO IN SERVICE SIDE DO WORK WITH INSERTING METADATA FROM JSON
 @Suppress("PropertyName")
 val NOTHING_PLAYING: MediaMetadataCompat = MediaMetadataCompat.Builder()
     .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, "")

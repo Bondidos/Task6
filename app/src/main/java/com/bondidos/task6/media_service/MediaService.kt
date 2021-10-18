@@ -1,20 +1,22 @@
 package com.bondidos.task6.media_service
 
 import android.app.PendingIntent
-import android.media.AudioAttributes.CONTENT_TYPE_MUSIC
+import android.media.browse.MediaBrowser
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
+import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import androidx.media.MediaBrowserServiceCompat
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.C.CONTENT_TYPE_MUSIC
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
+import com.google.android.exoplayer2.source.MediaSource
 
+private const val BROWSER_ROOT = "BrowserRoot"
 
 class MediaService : MediaBrowserServiceCompat() {
 
@@ -51,6 +53,20 @@ class MediaService : MediaBrowserServiceCompat() {
                 or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
                 or PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH
     )
+
+    private var _catalog: TestMusicCatalog? = null
+    private val musicCatalog: TestMusicCatalog by lazy { getCatalog() }
+
+    private fun getCatalog(): TestMusicCatalog {
+        return if (_catalog == null) {
+            val catalog = TestMusicCatalog(this.applicationContext)
+            _catalog = catalog
+            catalog
+        } else {
+            requireNotNull(_catalog)
+        }
+    }
+
     /**
      * Configure ExoPlayer to handle audio focus for us.
      * See [Player.AudioComponent.setAudioAttributes] for details.
@@ -90,6 +106,7 @@ class MediaService : MediaBrowserServiceCompat() {
         mediaSessionConnector = MediaSessionConnector(mediaSession).apply{
                 setPlayer(exoPlayer)
             }
+        mediaSession
     }
 
 
@@ -97,15 +114,40 @@ class MediaService : MediaBrowserServiceCompat() {
         clientPackageName: String,
         clientUid: Int,
         rootHints: Bundle?
-    ): BrowserRoot? {
-        TODO("Not yet implemented")
+    ): BrowserRoot {
+        return BrowserRoot (BROWSER_ROOT,null)
     }
 
     override fun onLoadChildren(
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
     ) {
-        TODO("Not yet implemented")
+        // TODO DO AV EVENT ERROR : NETWORK ERROR
+        val data = ArrayList<MediaBrowserCompat.MediaItem>(musicCatalog.countTracks)
+        //val descriptionBuilder = MediaDescriptionCompat.Builder()
+
+        for ((i, track) in musicCatalog.getTrackCatalog().withIndex()) {
+            /*Log.i("TAG", "track = ${track.title}")
+            //val track = musicCatalog.getTrackByIndex(i)
+            val description = descriptionBuilder
+                .setDescription(track.artist)
+                .setTitle(track.title)
+                .setSubtitle(track.artist)
+                .setIconUri(Uri.parse(track.bitmapUri))
+                .setMediaId(i.toString())
+                .build()*/
+            data.add(MediaBrowserCompat.MediaItem(
+                MediaDescriptionCompat.Builder()
+                .setDescription(track.artist)
+                .setTitle(track.title)
+                .setSubtitle(track.artist)
+                .setIconUri(Uri.parse(track.bitmapUri))
+                .setMediaId(i.toString())
+                .build(), FLAG_PLAYABLE)
+            )
+            exoPlayer.setMediaItem(MediaItem.fromUri(Uri.parse(track.trackUri)))
+        }
+        result.sendResult(data)
     }
 
     override fun onDestroy() {

@@ -25,7 +25,7 @@ private const val BUTTON_PREVIOUS = 5
 
 class NowPlayingViewModel (val context: Context) : ViewModel() {
 
-    private var mediaServiceBinder: MediaService.MediaServiceBinder? = null
+    //private var mediaServiceBinder: MediaService.MediaServiceBinder? = null
 
     private var mediaController: MediaControllerCompat? = null
     private var callback: MediaControllerCompat.Callback? = null
@@ -37,14 +37,14 @@ class NowPlayingViewModel (val context: Context) : ViewModel() {
     val playingState: LiveData<PlayingState> get() = _playingState
 
 
-    init {
+    /*init {
         callback = object : MediaControllerCompat.Callback() {
             override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
                 state?.let {
-                    /*val playing = it.state == PlaybackStateCompat.STATE_PLAYING
+                    *//*val playing = it.state == PlaybackStateCompat.STATE_PLAYING
                     playButton.isEnabled = !playing
                     pauseButton.isEnabled = playing
-                    stopButton.isEnabled = playing*/
+                    stopButton.isEnabled = playing*//*
 
                     when (it.state) {
                         PlaybackStateCompat.STATE_PLAYING -> callbackPlay()
@@ -101,7 +101,7 @@ class NowPlayingViewModel (val context: Context) : ViewModel() {
 
         bluetoothIntentListener?.init(callButtonEventListener)
     }
-
+*/
 
     fun nextTrack() {
         mediaController?.transportControls?.skipToNext()
@@ -208,12 +208,12 @@ class NowPlayingViewModel (val context: Context) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        mediaServiceBinder = null
+     //   mediaServiceBinder = null
         if (mediaController != null) {
             mediaController?.unregisterCallback(callback as MediaControllerCompat.Callback)
             mediaController = null
         }
-        context.unbindService(serviceConnection!!)
+//        context.unbindService(serviceConnection!!)
         bluetoothIntentListener?.destroy()
     }
 }

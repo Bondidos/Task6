@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bondidos.task6.R
 import com.bondidos.task6.databinding.NowPlayingFragmentBinding
 import com.bondidos.task6.databinding.TrackListFragmentBinding
 import com.bondidos.task6.models.Factories.NowPlayingViewModelFactory
+import com.bondidos.task6.models.MainActivityViewModel
 import com.bondidos.task6.models.NowPlayingViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.now_playing_fragment.*
@@ -22,6 +24,7 @@ class NowPlayingFragment : Fragment() {
     private val nowPlayingViewModel by viewModels<NowPlayingViewModel> {
         NowPlayingViewModelFactory(requireContext())
     }
+    private val mainViewModel by activityViewModels<MainActivityViewModel>()
 
     private var _binding: NowPlayingFragmentBinding? = null
     private val binding: NowPlayingFragmentBinding get() = requireNotNull(_binding)
@@ -43,7 +46,7 @@ class NowPlayingFragment : Fragment() {
 
     private fun initListeners() {
         with(binding){
-            btnPlay.setOnClickListener { nowPlayingViewModel.playTrack() }
+            btnPlay.setOnClickListener { mainViewModel.play()/*nowPlayingViewModel.playTrack()*/ }
             btnStop.setOnClickListener { nowPlayingViewModel.stopPlaying() }//todo(stand to pause instead stop)
             btnPrev.setOnClickListener { nowPlayingViewModel.previousTrack() }
             btnNext.setOnClickListener { nowPlayingViewModel.nextTrack() }
