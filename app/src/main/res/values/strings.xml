@@ -2,5 +2,7 @@
     <string name="app_name">Task6</string>
     <string name="notification_channel_name">Music Channel</string>
     <string name="notification_channel_description">Shows the currently playing music</string>
+    <string name="song_title">Song Title</string>
+    <string name="artist">Artist</string>
 
 </resources>

@@ -22,7 +22,8 @@ class MusicPlayerEventListener   (
         }
     }
 //todo find solution
-    /*override fun onPlaybackStateChanged(playbackState: Int) {
+
+/*    override fun onPlaybackStateChanged(playbackState: Int) {
         super.onPlaybackStateChanged(playbackState)
         if(playbackState == Player.STATE_READY) {
             musicService.stopForeground(false)

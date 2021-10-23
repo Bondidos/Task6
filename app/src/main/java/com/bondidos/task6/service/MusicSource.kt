@@ -22,7 +22,7 @@ class MusicSource @Inject constructor(private val musicCatalog: MusicCatalog) {
 
     var songs = emptyList<MediaMetadataCompat>()
 
-    suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
+    suspend fun fetchMediaData() = withContext(Dispatchers.Main) {
         // while downloading
         state = STATE_INITIALIZING
         val allSongs = musicCatalog.getAllSongs()

@@ -2,9 +2,12 @@ package com.bondidos.task6.di
 
 import android.content.Context
 import com.bondidos.task6.R
+import com.bondidos.task6.adapter.SongAdapter
 import com.bondidos.task6.connector.MusicServiceConnection
 import com.bondidos.task6.data.MusicCatalog
+import com.bondidos.task6.data.SongJsonAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
@@ -34,4 +37,10 @@ object AppModule {
     fun provideMusicConnection(
         @ApplicationContext context: Context
     ) = MusicServiceConnection(context)
+
+    @Singleton
+    @Provides
+    fun provideAdapter(
+        glide: RequestManager
+    ) = SongAdapter(glide)
 }

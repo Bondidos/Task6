@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/main_activity.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/list_fragment.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/main_activity.xml" value="0.25" />
         <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/main_fragment.xml" value="0.20260416666666667" />
-        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/now_playing_fragment.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/now_playing_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/song_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/track_item.xml" value="0.1" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/track_list.xml" value="0.25" />
+        <entry key="..\:/Users/Sekiro/StudioProjects/Task6-1/app/src/main/res/layout/track_list_fragment.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
