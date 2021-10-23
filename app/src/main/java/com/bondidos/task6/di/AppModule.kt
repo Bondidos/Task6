@@ -27,10 +27,4 @@ object AppModule {
             .error(R.drawable.ic_baseline_music_note_24)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
     )
-
-    @Singleton
-    @Provides
-    fun provideMusicCatalog(
-        @ApplicationContext context: Context
-    ) = MusicCatalog(context)
 }

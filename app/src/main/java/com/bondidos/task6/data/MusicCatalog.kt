@@ -18,12 +18,9 @@ class MusicCatalog @Inject constructor(private val context: Context) {
             .build()
         val arrayType = Types.newParameterizedType(List::class.java, Song::class.java)
         val adapter: JsonAdapter<List<Song>> = moshi.adapter(arrayType)
-
         val file = "playlist.json"
-
         val myJson = context.assets.open(file).bufferedReader().use { it.readText() }
 
         return adapter.fromJson(myJson) ?: emptyList()
-
     }
 }

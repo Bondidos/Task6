@@ -1,6 +1,7 @@
 package com.bondidos.task6.di
 
 import android.content.Context
+import com.bondidos.task6.data.MusicCatalog
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
@@ -12,10 +13,16 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ServiceComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ServiceScoped
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
+    @ServiceScoped
+    @Provides
+    fun provideMusicCatalog(
+        @ApplicationContext context: Context
+    ) = MusicCatalog(context)
 
     @ServiceScoped
     @Provides
@@ -38,6 +45,6 @@ object ServiceModule {
     @Provides
     fun provideDataSourceFactory(
         @ApplicationContext context: Context
-    ) = DefaultDataSourceFactory(context, Util.getUserAgent(context, "Spotify App"))
+    ) = DefaultDataSourceFactory(context, Util.getUserAgent(context, "Task 6"))
 
 }
