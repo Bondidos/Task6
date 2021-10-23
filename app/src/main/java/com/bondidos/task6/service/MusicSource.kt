@@ -1,5 +1,6 @@
 package com.bondidos.task6.service
 
+import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
 import android.support.v4.media.MediaDescriptionCompat
@@ -7,6 +8,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import androidx.core.net.toUri
 import com.bondidos.task6.data.MusicCatalog
+import com.bondidos.task6.other.constants.SONG_DURATION
 import com.bondidos.task6.service.State.*
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -59,12 +61,16 @@ class MusicSource @Inject constructor(private val musicCatalog: MusicCatalog) {
 
     // List<MediaItem>
     fun asMediaItems() = songs.map { song ->
+        val extra = Bundle().apply {
+            putLong(SONG_DURATION, song.getLong(METADATA_KEY_DURATION))
+        }
         val description = MediaDescriptionCompat.Builder()
             .setMediaUri(song.description.mediaUri)
             .setTitle(song.description.title)
             .setSubtitle(song.description.subtitle)
             .setMediaId(song.description.mediaId)
             .setIconUri(song.description.iconUri)
+            .setExtras(extra)
             .build()
         MediaBrowserCompat.MediaItem(description, FLAG_PLAYABLE)
     }.toMutableList()

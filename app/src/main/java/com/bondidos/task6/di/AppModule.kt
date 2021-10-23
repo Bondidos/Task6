@@ -2,6 +2,7 @@ package com.bondidos.task6.di
 
 import android.content.Context
 import com.bondidos.task6.R
+import com.bondidos.task6.connector.MusicServiceConnection
 import com.bondidos.task6.data.MusicCatalog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -27,4 +28,10 @@ object AppModule {
             .error(R.drawable.ic_baseline_music_note_24)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
     )
+
+    @Singleton
+    @Provides
+    fun provideMusicConnection(
+        @ApplicationContext context: Context
+    ) = MusicServiceConnection(context)
 }
