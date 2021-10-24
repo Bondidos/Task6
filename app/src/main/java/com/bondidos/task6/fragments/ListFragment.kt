@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ListFragment : Fragment() {
+class ListFragment : Fragment(R.layout.list_fragment) {
 
     private var _binding: ListFragmentBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -62,7 +62,6 @@ class ListFragment : Fragment() {
                     binding.allSongsProgressBar.isVisible = false
                     result.data?.let { songs ->
                         songAdapter.songs = songs
-                        val a = binding.recycler.adapter?.itemCount
                     }
                 }
                 Status.ERROR -> Unit
