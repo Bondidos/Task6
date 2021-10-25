@@ -37,10 +37,4 @@ object AppModule {
     fun provideMusicConnection(
         @ApplicationContext context: Context
     ) = MusicServiceConnection(context)
-
-    @Singleton
-    @Provides
-    fun provideAdapter(
-        glide: RequestManager
-    ) = SongAdapter(glide)
 }

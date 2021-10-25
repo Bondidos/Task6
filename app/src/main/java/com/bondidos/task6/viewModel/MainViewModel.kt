@@ -13,6 +13,7 @@ import com.bondidos.task6.other.constants.SONG_DURATION
 import com.bondidos.task6.service.isPlayEnabled
 import com.bondidos.task6.service.isPlaying
 import com.bondidos.task6.service.isPrepared
+import com.bondidos.task6.utils.Event
 import com.bondidos.task6.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,8 +22,12 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val musicServiceConnection: MusicServiceConnection
 ) : ViewModel() {
+
     private val _mediaItems = MutableLiveData<Resource<List<Song>>>()
     val mediaItems: LiveData<Resource<List<Song>>> = _mediaItems
+
+    val navigateToFragment: LiveData<Event<Boolean>> get() = _navigateToFragment
+    private val _navigateToFragment = MutableLiveData<Event<Boolean>>()
 
     val isConnected = musicServiceConnection.isConnected
     val networkError = musicServiceConnection.networkError
@@ -50,7 +55,14 @@ class MainViewModel @Inject constructor(
                     }
                     _mediaItems.postValue(Resource.success(items))
                 }
-            })
+            }
+        )
+    }
+
+    fun navigateToSongFragment(){
+        if(_navigateToFragment.value?.getContentIfNotHandled() == true)
+            _navigateToFragment.postValue(Event(false))
+        else _navigateToFragment.postValue(Event(true))
     }
 
     fun skipToNextSong() {
@@ -72,8 +84,10 @@ class MainViewModel @Inject constructor(
         ) {
             playbackState.value?.let { playbackState ->
                 when {
-                    playbackState.isPlaying -> if (toggle) musicServiceConnection.transportControls.pause()
-                    playbackState.isPlayEnabled -> musicServiceConnection.transportControls.play()
+                    playbackState.isPlaying ->
+                        if (toggle) musicServiceConnection.transportControls.pause()
+                    playbackState.isPlayEnabled ->
+                        musicServiceConnection.transportControls.play()
                     else -> Unit
                 }
             }

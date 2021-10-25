@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task6.data.Song
 import com.bondidos.task6.databinding.SongItemBinding
+import com.bondidos.task6.utils.displayTime
 import com.bumptech.glide.RequestManager
 import javax.inject.Inject
 
@@ -57,15 +58,6 @@ class SongAdapter @Inject constructor(
                 }
             }
         }
-    }
-    private fun Long.displayTime(): String {                                                         // данный метод расширения для Long конвертирует текущее значение таймера в миллисекундах
-        // в формат “HH:MM:SS:MsMs” и возвращает соответствующую строку
-
-        val h = this / 1000 / 3600
-        val m = this / 1000 % 3600 / 60
-        val s = this / 1000 % 60
-
-        return "${h}:${m}:${s}"
     }
 
     private var onItemClickListener: ((Song) -> Unit)? = null

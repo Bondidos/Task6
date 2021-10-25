@@ -8,4 +8,11 @@
         android:id="@+id/listFragment"
         android:name="com.bondidos.task6.fragments.ListFragment"
         android:label="ListFragment" />
+    <fragment
+        android:id="@+id/songFragment"
+        android:name="com.bondidos.task6.fragments.SongFragment"
+        android:label="SongFragment" />
+
+    <action android:id="@+id/globalActionToSongFragment"
+        app:destination="@id/songFragment"/>
 </navigation>

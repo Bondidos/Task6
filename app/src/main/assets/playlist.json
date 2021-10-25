@@ -1,4 +1,9 @@
 [
+  {"title":"Deutschland",
+    "artist":"Rammstein",
+    "bitmapUri":"https://firebasestorage.googleapis.com/v0/b/spotifycloneyt-bced5.appspot.com/o/rammstein-deutschland-mv%401400x1050.jpg?alt=media&token=daa649fc-2958-4c98-b739-a2dbadf06b60",
+    "trackUri":"https://firebasestorage.googleapis.com/v0/b/spotifycloneyt-bced5.appspot.com/o/01.%20Deutschland.flac?alt=media&token=4ba556a8-3419-4621-bee6-435d451215db",
+    "duration":323000},
 {"title":"Ice and Snow",
 "artist":"Rafael Krux",
 "bitmapUri":"https://www.pelicanwater.com/blog/wp-content/uploads/2019/02/cropped-Snow_Blog_Jan_2019-01.jpg",

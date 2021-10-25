@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +13,6 @@ import com.bondidos.task6.adapter.SongAdapter
 import com.bondidos.task6.databinding.ListFragmentBinding
 import com.bondidos.task6.utils.Status
 import com.bondidos.task6.viewModel.MainViewModel
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,7 +42,12 @@ class ListFragment : Fragment(R.layout.list_fragment) {
 
         setupRecyclerView()
         subscribeToObservers()
+        setOnClickListeners()
+    }
+
+    private fun setOnClickListeners() {
         songAdapter.setOnItemClickListener {
+            mainViewModel.navigateToSongFragment()
             mainViewModel.playOrToggleSong(it)
         }
     }
@@ -73,9 +75,5 @@ class ListFragment : Fragment(R.layout.list_fragment) {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-    companion object {
-        @JvmStatic
-        fun newInstance() = ListFragment()
     }
 }
