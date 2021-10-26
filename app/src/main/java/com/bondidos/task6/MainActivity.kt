@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
     private fun setObservers() {
 
         mainViewModel.navigateToFragment.observe(this){
-            it?.let{
+            isAbleToFinish = false
+            it?.getContentIfNotHandled()?.let{
                 navToSongFragment()
             }
         }
