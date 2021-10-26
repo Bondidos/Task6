@@ -1,6 +1,7 @@
 package com.bondidos.task6.utils
 
 import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DURATION
 import android.view.View
 import android.view.animation.AnimationUtils
 import com.bondidos.task6.R
@@ -23,13 +24,16 @@ private fun displaySlot(count: Long): String {
 }
 
 fun MediaMetadataCompat.toSong(): Song? {
+
+    val duration = this.getLong(METADATA_KEY_DURATION)
+
     return description?.let {
         Song(
             it.title.toString(),
             it.subtitle.toString(),
             it.iconUri.toString(),
             it.mediaUri.toString(),
-            it.extras?.getLong(SONG_DURATION) ?: 0L
+            duration
         )
     }
 }

@@ -88,7 +88,7 @@ class MusicService : MediaBrowserServiceCompat() {
             mediaSession.sessionToken,
             MusicNotificationListener(this)
         ) {
-            curSongDuration = exoPlayer.duration
+           //curSongDuration = exoPlayer.duration
         }
 
         val musicPlaybackPreparer = MusicPlaybackPreparer(musicSource) {
