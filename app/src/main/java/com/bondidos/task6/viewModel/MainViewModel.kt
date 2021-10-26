@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bondidos.task6.connector.MusicServiceConnection
 import com.bondidos.task6.data.Song
-import com.bondidos.task6.other.constants.MEDIA_ROOT_ID
-import com.bondidos.task6.other.constants.SONG_DURATION
+import com.bondidos.task6.other.Constants.MEDIA_ROOT_ID
+import com.bondidos.task6.other.Constants.SONG_DURATION
 import com.bondidos.task6.service.isPlayEnabled
 import com.bondidos.task6.service.isPlaying
 import com.bondidos.task6.service.isPrepared

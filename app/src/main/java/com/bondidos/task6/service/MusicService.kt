@@ -9,8 +9,7 @@ import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
-import com.bondidos.task6.data.Song
-import com.bondidos.task6.other.constants.MEDIA_ROOT_ID
+import com.bondidos.task6.other.Constants.MEDIA_ROOT_ID
 import com.bondidos.task6.service.callbacks.MusicNotificationListener
 import com.bondidos.task6.service.callbacks.MusicPlaybackPreparer
 import com.bondidos.task6.service.callbacks.MusicPlayerEventListener
@@ -57,15 +56,10 @@ class MusicService : MediaBrowserServiceCompat() {
 
     private lateinit var musicPlayerEventListener: MusicPlayerEventListener
 
-    companion object {
-        var curSongDuration = 0L
-            private set
-    }
-
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate() {
         super.onCreate()
-        serviceScope.launch{
+        serviceScope.launch {
             musicSource.fetchMediaData()
         }
 
@@ -87,13 +81,11 @@ class MusicService : MediaBrowserServiceCompat() {
             this,
             mediaSession.sessionToken,
             MusicNotificationListener(this)
-        ) {
-           //curSongDuration = exoPlayer.duration
-        }
+        )
 
         val musicPlaybackPreparer = MusicPlaybackPreparer(musicSource) {
             curPlayingSong = it
-            preparePlayer(musicSource.songs,curPlayingSong,true)
+            preparePlayer(musicSource.songs, curPlayingSong, true)
         }
 
         mediaSessionConnector = MediaSessionConnector(mediaSession)
@@ -117,8 +109,8 @@ class MusicService : MediaBrowserServiceCompat() {
         songs: List<MediaMetadataCompat>,
         itemToPlay: MediaMetadataCompat?,
         playNow: Boolean
-    ){
-        val curSongIndex = if(curPlayingSong == null) 0 else songs.indexOf(itemToPlay)
+    ) {
+        val curSongIndex = if (curPlayingSong == null) 0 else songs.indexOf(itemToPlay)
         exoPlayer.setMediaSource(musicSource.asMediaSource(dataSourceFactory))
         exoPlayer.prepare()                                                             //todo here?
         exoPlayer.seekTo(curSongIndex, 0L)
@@ -137,12 +129,12 @@ class MusicService : MediaBrowserServiceCompat() {
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
     ) {
-        when(parentId) {
+        when (parentId) {
             MEDIA_ROOT_ID -> {
                 val resultsSent = musicSource.whenReady { isInitialized ->
-                    if(isInitialized) {
+                    if (isInitialized) {
                         result.sendResult(musicSource.asMediaItems())
-                        if(!isPlayerInitialized && musicSource.songs.isNotEmpty()) {
+                        if (!isPlayerInitialized && musicSource.songs.isNotEmpty()) {
                             preparePlayer(musicSource.songs, musicSource.songs[0], false)
                             isPlayerInitialized = true
                         }
@@ -150,12 +142,12 @@ class MusicService : MediaBrowserServiceCompat() {
                         result.sendResult(null)
                     }
                 }
-                if(!resultsSent) {
+                if (!resultsSent) {
                     result.detach()
                 }
             }
         }
-     }
+    }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)

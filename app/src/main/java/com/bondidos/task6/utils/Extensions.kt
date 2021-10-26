@@ -6,11 +6,9 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import com.bondidos.task6.R
 import com.bondidos.task6.data.Song
-import com.bondidos.task6.other.constants.SONG_DURATION
 
 fun Long.displayTime(): String {
 
-    val h = this / 1000 / 3600
     val m = this / 1000 % 3600 / 60
     val s = this / 1000 % 60
 

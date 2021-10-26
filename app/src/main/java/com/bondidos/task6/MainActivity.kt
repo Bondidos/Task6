@@ -3,10 +3,11 @@ package com.bondidos.task6
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.navigation.findNavController
+import com.bondidos.task6.utils.Resource
+import com.bondidos.task6.utils.Status.ERROR
 import com.bondidos.task6.viewModel.MainViewModel
 import com.bumptech.glide.RequestManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +40,32 @@ class MainActivity : AppCompatActivity() {
                 navToSongFragment()
             }
         }
+
+        mainViewModel.isConnected.observe(this) {
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    ERROR ->  showErrorToast(result)
+                    else -> Unit
+                }
+            }
+        }
+
+        mainViewModel.networkError.observe(this) {
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    ERROR -> showErrorToast(result)
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    private fun showErrorToast(result: Resource<Boolean>){
+        Toast.makeText(
+            this,
+            result.message ?: "An unknown error occurred",
+            Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun navToSongFragment(){

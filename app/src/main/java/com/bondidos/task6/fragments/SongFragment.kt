@@ -2,7 +2,6 @@ package com.bondidos.task6.fragments
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
 class SongFragment : Fragment() {
@@ -68,7 +66,8 @@ class SongFragment : Fragment() {
                 currPlayingSong?.let {
                     mainViewModel.playOrToggleSong(
                         it,
-                        true)
+                        true
+                    )
                 }
 
             }
@@ -81,8 +80,12 @@ class SongFragment : Fragment() {
                 mainViewModel.skipToNextSong()
             }
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seeKBar_: SeekBar?, progress: Int, fromUser: Boolean) {
-                    if(fromUser){
+                override fun onProgressChanged(
+                    seeKBar_: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    if (fromUser) {
                         setCurrentPlayerTimeToTextView(progress.toLong())
                     }
                 }
@@ -102,27 +105,13 @@ class SongFragment : Fragment() {
     }
 
     private fun subscribeToObservers() {
- /*       mainViewModel.mediaItems.observe(viewLifecycleOwner) {
-            it?.let { result ->
-                when (result.status) {
-                    SUCCESS -> {
-                        result.data?.let { songs ->
-                            if (currPlayingSong == null && songs.isNotEmpty()) {
-                                currPlayingSong = songs[0]
-                                updateTitleAndSoundImage(songs[0])
-                            }
-                        }
-                    }
-                    else -> Unit
-                }
-            }
-        }*/
+
         mainViewModel.curPlayingSong.observe(viewLifecycleOwner) {
             if (it == null) return@observe
             currPlayingSong = it.toSong()
-            if(currPlayingSong?.duration == -1L) return@observe
-            currPlayingSong?.let {
-                updateTitleAndSoundImage(it)
+            if (currPlayingSong?.duration == -1L) return@observe
+            currPlayingSong?.let { song ->
+                updateTitleAndSoundImage(song)
             }
         }
 
@@ -136,18 +125,12 @@ class SongFragment : Fragment() {
             }
         }
 
-        songViewModel.curPlayerPosition.observe(viewLifecycleOwner){
+        songViewModel.curPlayerPosition.observe(viewLifecycleOwner) {
 
-            if(shouldUpdateSeekbar){
+            if (shouldUpdateSeekbar) {
                 binding.seekBar.progress = it.toInt()
                 setCurrentPlayerTimeToTextView(it)
             }
-        }
-
-        songViewModel.curSongDuration.observe(viewLifecycleOwner){
-           // binding.seekBar.max = it.toInt()
-           // val dataFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
-            //binding.songDuration.text = dataFormat.format(it)
         }
     }
 
@@ -161,7 +144,6 @@ class SongFragment : Fragment() {
         with(binding) {
             songName.text = title
             glide.load(song.bitmapUri).into(songImage)
-            Log.d("Long", song.duration.toString())
             seekBar.max = song.duration.toInt()
             val dataFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
             songDuration.text = dataFormat.format(song.duration)

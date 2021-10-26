@@ -9,7 +9,7 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bondidos.task6.other.constants.NETWORK_ERROR
+import com.bondidos.task6.other.Constants.NETWORK_ERROR
 import com.bondidos.task6.service.MusicService
 import com.bondidos.task6.utils.Event
 import com.bondidos.task6.utils.Resource

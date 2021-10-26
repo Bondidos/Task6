@@ -8,7 +8,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import androidx.core.net.toUri
 import com.bondidos.task6.data.MusicCatalog
-import com.bondidos.task6.other.constants.SONG_DURATION
+import com.bondidos.task6.other.Constants.SONG_DURATION
 import com.bondidos.task6.service.State.*
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -27,7 +27,7 @@ class MusicSource @Inject constructor(private val musicCatalog: MusicCatalog) {
         state = STATE_INITIALIZING
         val allSongs = musicCatalog.getAllSongs()
         songs = allSongs.map { song ->
-            MediaMetadataCompat.Builder()
+            Builder()
                 .putString(METADATA_KEY_ARTIST, song.artist)
                 .putString(METADATA_KEY_MEDIA_ID, song.title)
                 .putString(METADATA_KEY_TITLE, song.title)
