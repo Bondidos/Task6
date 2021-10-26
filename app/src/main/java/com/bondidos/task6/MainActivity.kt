@@ -9,9 +9,7 @@ import androidx.navigation.findNavController
 import com.bondidos.task6.utils.Resource
 import com.bondidos.task6.utils.Status.ERROR
 import com.bondidos.task6.viewModel.MainViewModel
-import com.bumptech.glide.RequestManager
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -21,9 +19,6 @@ class MainActivity : AppCompatActivity() {
     private var navHostFragment: View? = null
 
     private var isAbleToFinish = true
-
-    @Inject
-    lateinit var glide: RequestManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

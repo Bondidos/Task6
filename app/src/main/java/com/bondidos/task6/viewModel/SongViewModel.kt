@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bondidos.task6.connector.MusicServiceConnection
 import com.bondidos.task6.other.Constants.UPDATE_PLAYER_POSITION_INTERVAL
-import com.bondidos.task6.service.MusicService
 import com.bondidos.task6.service.currentPlaybackPosition
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

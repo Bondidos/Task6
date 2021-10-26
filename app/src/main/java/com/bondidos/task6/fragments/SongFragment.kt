@@ -13,7 +13,6 @@ import com.bondidos.task6.R
 import com.bondidos.task6.data.Song
 import com.bondidos.task6.databinding.SongFragmentBinding
 import com.bondidos.task6.service.isPlaying
-import com.bondidos.task6.utils.Status.SUCCESS
 import com.bondidos.task6.utils.playClickAnimation
 import com.bondidos.task6.utils.toSong
 import com.bondidos.task6.viewModel.MainViewModel
