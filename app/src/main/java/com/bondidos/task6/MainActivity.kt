@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        navHostFragment = findViewById<View>(R.id.navHostFragment)
+        navHostFragment = findViewById(R.id.navHostFragment)
         setObservers()
     }
 
