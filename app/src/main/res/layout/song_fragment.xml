@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spanish_pink"
+    android:background="@color/background"
     tools:context=".MainActivity">
 
     <com.google.android.material.textview.MaterialTextView
@@ -24,7 +24,7 @@
         android:id="@+id/songImage"
         android:layout_width="354dp"
         android:layout_height="360dp"
-        android:background="@color/spanish_pink"
+        android:background="@color/background"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,6 +46,7 @@
         android:id="@+id/seekBar"
         android:layout_width="0dp"
         android:layout_height="18dp"
+        android:outlineSpotShadowColor="@color/black_coffee"
         app:layout_constraintEnd_toStartOf="@+id/songDuration"
         app:layout_constraintStart_toEndOf="@+id/curTime"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />

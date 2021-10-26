@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.ListFragment
 import androidx.navigation.findNavController
-import com.bondidos.task6.databinding.MainActivityBinding
 import com.bondidos.task6.viewModel.MainViewModel
 import com.bumptech.glide.RequestManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,13 +17,17 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
 
+    private var navHostFragment: View? = null
+
+    private var isAbleToFinish = true
+
     @Inject
     lateinit var glide: RequestManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-
+        navHostFragment = findViewById<View>(R.id.navHostFragment)
         setObservers()
     }
 
@@ -37,9 +41,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navToSongFragment(){
-
-        findViewById<View>(R.id.navHostFragment).findNavController().navigate(
+        isAbleToFinish = false
+        navHostFragment?.findNavController()?.navigate(
             R.id.globalActionToSongFragment
         )
+    }
+    private fun navToListFragment(){
+        isAbleToFinish = true
+        navHostFragment?.findNavController()?.navigate(
+            R.id.navToListFragment
+        )
+    }
+
+    override fun onBackPressed() {
+        if(isAbleToFinish) finish() else navToListFragment()
     }
 }

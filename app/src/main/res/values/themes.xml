@@ -3,10 +3,10 @@
     <style name="Theme.Task6" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/Dark_Orchid</item>
-        <item name="colorPrimaryVariant">@color/Violet_RYB</item>
-        <item name="colorOnPrimary">@color/Blue_Violet_Color_Wheel</item>
+        <item name="colorPrimaryVariant">@color/Blue_Violet_Color_Wheel</item>
+        <item name="colorOnPrimary">@color/spanish_pink</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/spanish_pink</item>
+        <item name="colorSecondary">@color/Violet_RYB</item>
         <item name="colorSecondaryVariant">@color/Sky_Magenta</item>
         <item name="colorOnSecondary">@color/black_coffee</item>
         <!-- Status bar color. -->

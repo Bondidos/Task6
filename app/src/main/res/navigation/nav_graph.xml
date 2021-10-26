@@ -15,4 +15,7 @@
 
     <action android:id="@+id/globalActionToSongFragment"
         app:destination="@id/songFragment"/>
+    <action
+        android:id="@+id/navToListFragment"
+        app:destination="@id/listFragment" />
 </navigation>
